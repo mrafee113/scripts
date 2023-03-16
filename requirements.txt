@@ -1,0 +1,7 @@
+pysubs2
+requests
+lxml
+urllib3
+prettytable
+termcolor
+beautifulsoup4
