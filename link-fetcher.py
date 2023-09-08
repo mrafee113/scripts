@@ -5,6 +5,7 @@ from lxml import html
 from urllib.parse import urlsplit
 
 if len(sys.argv) < 2:
+    print("not enough arguments..")
     exit(1)
 
 url = sys.argv[1]
@@ -16,10 +17,10 @@ links = list()
 for el in viable_elements:
     try:
         links.append(s.scheme + '://' + s.hostname + s.path + str(el.attrib['href']))
-    except Exception:
+    except Exception as exc:
         pass
 
 with open("/tmp/links.txt", 'w') as file:
     file.write('\n'.join(links))
 
-exit(1)
+exit(0)
