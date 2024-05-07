@@ -5,3 +5,4 @@ urllib3
 prettytable
 termcolor
 beautifulsoup4
+PyMuPDF

@@ -3,7 +3,7 @@ import random
 from prettytable import PrettyTable
 from termcolor import colored
 
-file_path = '/home/mehdi/Bedroom/Documents/spotify-playlists/all.csv'
+file_path = '/home/francis/Bedroom/Documents/spotify-playlists/all.csv'
 
 with open(file_path, newline="") as file:
     reader = csv.DictReader(file)
