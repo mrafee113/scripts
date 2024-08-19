@@ -1,0 +1,21 @@
+defaults:
+    proxify: false
+    base-dir: /tmp/test/base
+    retry: 3
+    start-time: "17:35"
+
+https://dl2.soft98.ir/soft/w/WinRAR.7.01.zip?1724075726: ""
+https://dl2.soft98.ir/soft/w/WinRAR.7.01.exe?1724076060:
+    out: winrar.exe
+https://dl2.soft98.ir/soft/w/WinRAR.Persian.Language.v1.zip?1724076285:
+    out: winrar-fa.zip
+    dir: subdir
+https://pornhub.com:
+    out: ph.html
+    dir: somewhere/here
+    retry-file: 10
+    proxify: true
+https://xvideos.com:
+    out: xv.html
+    dir: somewhere/there
+    proxify: true
