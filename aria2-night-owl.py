@@ -2,7 +2,6 @@
 
 import os
 import time
-import select
 import logging
 import argparse
 import subprocess
@@ -75,6 +74,8 @@ def build_aria2c_command(url, opts):
 	if opts["retry-file"]:
 		cmd.append(f"--max-tries={opts['retry-file']}")
 
+	cmd.extend(["--console-log-level=notice", "--summary-interval=60"])
+
 	cmd.append(url)
 	return cmd
 
@@ -85,36 +86,24 @@ def run_download(url, opts):
 	logging.debug(f"Starting download for :: {' '.join(cmd)}")
 
 	process = subprocess.Popen(
-		cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+		cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
 	)
 
 	while True:
-		reads = [process.stdout.fileno(), process.stderr.fileno()]
-		ret = select.select(reads, [], [])
-
-		for fd in ret[0]:
-			if fd == process.stdout.fileno():
-				output = process.stdout.readline()
-				if output:
-					logging.info(output.strip())
-			elif fd == process.stderr.fileno():
-				error = process.stderr.readline()
-				if error:
-					logging.error(error.strip())
-
-		if process.poll() is not None:
+		output = process.stdout.readline()
+		if output == "" and process.poll() is not None:
 			break
+		if output:
+			print(output.strip())  # Directly output to Python's stdout
 
 	process.stdout.close()
-	process.stderr.close()
 
 	if process.returncode == 0:
 		logging.debug(f"Download successful for {url}")
 		return True
 	else:
-		logging.error(f"Download failed for {url} with error: {process.stderr}")
+		logging.error(f"Download failed for {url} with error: {process.returncode}")
 		return False
-	return process.returncode == 0
 
 
 def populate_defaults(defaults: dict):
