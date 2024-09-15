@@ -74,7 +74,7 @@ def build_aria2c_command(url, opts):
 	if opts["retry-file"]:
 		cmd.append(f"--max-tries={opts['retry-file']}")
 
-	cmd.extend(["--console-log-level=notice", "--summary-interval=60"])
+	cmd.extend(["--console-log-level=notice", "--summary-interval=15"])
 
 	cmd.append(url)
 	return cmd
